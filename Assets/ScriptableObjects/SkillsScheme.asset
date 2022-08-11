@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae6bc3f377b5443c8d5bd982f5ccbf0c, type: 3}
   m_Name: SkillsScheme
   m_EditorClassIdentifier: 
-  _skills: []
+  _skills:
+  - {fileID: 11400000, guid: d9aa3681228219241a040a912e4af0ff, type: 2}
+  - {fileID: 11400000, guid: b9cbcb9d400f6e4c283fe408b57d378d, type: 2}
+  - {fileID: 11400000, guid: dbab7efb28560b209a2aa0dcbae0965a, type: 2}
+  - {fileID: 11400000, guid: 9c9d2984e0eed27afac48a5ebb380b78, type: 2}
+  - {fileID: 11400000, guid: ae31a6a6ef2ab9638a71fb8ca189d59f, type: 2}
+  - {fileID: 11400000, guid: 1ef573cd302652e16a9c7c3910f46aee, type: 2}
+  - {fileID: 11400000, guid: 4f5e9b3ec8719fddfab3f491011d1c2b, type: 2}
+  - {fileID: 11400000, guid: 60bfcf26fbb7202b1bacc5a6c8a454a6, type: 2}
+  - {fileID: 11400000, guid: 004a048cbf588c3cdacbc83f3536f04d, type: 2}
+  - {fileID: 11400000, guid: 4d4afc3c4258a8f01bbdb233201bee9b, type: 2}

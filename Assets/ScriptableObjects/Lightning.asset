@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc547681f1a54a7d98f834fd540c4d9b, type: 3}
   m_Name: Lightning
   m_EditorClassIdentifier: 
-  _skillPointsToLearn: 1
-  _parentSkills: []
-  _skillName: 
+  _skillPointsToLearn: 2
+  _parentSkills:
+  - {fileID: 11400000, guid: ae31a6a6ef2ab9638a71fb8ca189d59f, type: 2}
+  - {fileID: 11400000, guid: 9c9d2984e0eed27afac48a5ebb380b78, type: 2}
+  _skillName: lightning

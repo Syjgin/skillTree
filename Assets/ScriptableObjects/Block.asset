@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc547681f1a54a7d98f834fd540c4d9b, type: 3}
   m_Name: Block
   m_EditorClassIdentifier: 
-  _skillPointsToLearn: 3
+  _skillPointsToLearn: 1
   _parentSkills: []
-  _skillName: "\u041F\u043E\u043B\u0451\u0442"
+  _skillName: blocking

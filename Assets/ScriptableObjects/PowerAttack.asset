@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc547681f1a54a7d98f834fd540c4d9b, type: 3}
   m_Name: PowerAttack
   m_EditorClassIdentifier: 
-  _skillPointsToLearn: 1
-  _parentSkills: []
-  _skillName: 
+  _skillPointsToLearn: 2
+  _parentSkills:
+  - {fileID: 11400000, guid: d9aa3681228219241a040a912e4af0ff, type: 2}
+  _skillName: power attack
