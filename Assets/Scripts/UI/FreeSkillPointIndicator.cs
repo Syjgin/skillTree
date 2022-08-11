@@ -20,8 +20,6 @@ namespace UI
 
         private void OnDataLoaded(IInitialDataProvider dataProvider)
         {
-            if(dataProvider == null)
-                return;
             UpdateIndicator(dataProvider.GetState());
         }
 

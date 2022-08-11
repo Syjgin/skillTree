@@ -16,8 +16,6 @@ namespace Data
 
         private void HandleInitialData(IInitialDataProvider provider)
         {
-            if(provider == null)
-                return;
             _presenter = new SkillTreePresenter(provider);
             _eventBus.SubscribeSkillSelected(OnSkillSelected);
             _eventBus.SubscribeSkillTreeCommand(OnSkillTreeCommand);

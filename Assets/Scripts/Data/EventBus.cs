@@ -1,18 +1,19 @@
 using System;
 using Logic;
 using UniRx;
-using UnityEngine;
 
 namespace Data
 {
-    public class EventBus : MonoBehaviour
+    public class EventBus
     {
         private readonly BehaviorSubject<IInitialDataProvider> _dataProviderSubject = new(null);
 
         public void SubscribeInitialDataProvider(Action<IInitialDataProvider> callback)
         {
-            _dataProviderSubject.Subscribe(callback);
-            _dataProviderSubject.PublishLast();
+            _dataProviderSubject.SkipWhile(it => it == null)
+                .Subscribe(callback);
+            if(_dataProviderSubject.Value != null)
+                _dataProviderSubject.PublishLast();
         }
 
         public void SendInitialDataProvider(IInitialDataProvider initialDataProvider)
