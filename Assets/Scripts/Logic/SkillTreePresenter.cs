@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Logic
@@ -41,15 +40,65 @@ namespace Logic
             RecalculateAbilities();
         }
 
-        public void SelectSkill(string name)
+        public bool TrySelectSkill(string name)
         {
             foreach (var skill in _allSkills)
             {
                 if (skill.SkillName != name) continue;
                 _selectedSkill = skill;
                 RecalculateAbilities();
-                return;
+                return true;
             }
+            return false;
+        }
+        
+        public bool TryLearn()
+        {
+            if(!CanLearn)
+                return false;
+            SkillPoints -= _selectedSkill.SkillPointsToLearn;
+            _knownSkills.Add(_selectedSkill);
+            RecalculateAbilities();
+            return true;
+        }
+        
+        public bool TryForget()
+        {
+            if(!CanForget)
+                return false;
+            SkillPoints += _selectedSkill.SkillPointsToLearn;
+            _knownSkills.Remove(_selectedSkill);
+            RecalculateAbilities();
+            return true;
+        }
+
+        public void ForgetAll()
+        {
+            foreach (var knownSkill in _knownSkills)
+            {
+                SkillPoints += knownSkill.SkillPointsToLearn;
+            }
+            _knownSkills.Clear();
+        }
+
+        public SkillTreeState GetState()
+        {
+            var names = new List<string>();
+            foreach (var knownSkill in _knownSkills)
+            {
+                names.Add(knownSkill.SkillName);
+            }
+
+            return new SkillTreeState
+            {
+                FreeSkillPoints = SkillPoints,
+                KnownSkills = names
+            };
+        }
+
+        public int GetSelectedSkillPoints()
+        {
+            return SkillNotSelected() ? 0 : _selectedSkill.SkillPointsToLearn;
         }
 
         private void RecalculateAbilities()
@@ -83,15 +132,6 @@ namespace Logic
             }
         }
 
-        public void Learn()
-        {
-            if(!CanLearn)
-                return;
-            SkillPoints -= _selectedSkill.SkillPointsToLearn;
-            _knownSkills.Add(_selectedSkill);
-            RecalculateAbilities();
-        }
-
         private void RecalculateForgetAbility()
         {
             if (SkillNotSelected())
@@ -106,47 +146,12 @@ namespace Logic
             {
                 foreach (var knownSkillParent in knownSkill.Parents)
                 {
-                    if (knownSkillParent.SkillName == _selectedSkill.SkillName)
-                    {
-                        CanForget = false;
-                        return;
-                    }
+                    if (knownSkillParent.SkillName != _selectedSkill.SkillName) continue;
+                    CanForget = false;
+                    return;
                 }
             }
             CanForget = true;
-        }
-
-        public void Forget()
-        {
-            if(!CanForget)
-                return;
-            SkillPoints += _selectedSkill.SkillPointsToLearn;
-            _knownSkills.Remove(_selectedSkill);
-            RecalculateAbilities();
-        }
-
-        public void ForgetAll()
-        {
-            foreach (var knownSkill in _knownSkills)
-            {
-                SkillPoints += knownSkill.SkillPointsToLearn;
-            }
-            _knownSkills.Clear();
-        }
-
-        public SkillTreeState GetState()
-        {
-            var names = new List<string>();
-            foreach (var knownSkill in _knownSkills)
-            {
-                names.Add(knownSkill.SkillName);
-            }
-
-            return new SkillTreeState
-            {
-                FreeSkillPoints = SkillPoints,
-                KnownSkills = names
-            };
         }
 
         private bool SkillNotSelected()

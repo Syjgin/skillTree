@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using Logic;
 using UnityEngine;
+using Zenject;
 
 namespace Data
 {
@@ -9,26 +9,23 @@ namespace Data
     {
         private const string SkillTreeStateKey = "SkillTreeStateKey";
         [SerializeField] private SkillsScheme _allSkills;
-        [SerializeField] private EventHandler _eventHandler;
+        [Inject] private EventBus _eventBus;
         private readonly List<Skill> _skills = new();
         private SkillTreeState _state;
+        private IInitialDataProvider _gameDataProvider;
 
         private void OnEnable()
         {
             LoadState();
             LoadSkills();
-            _eventHandler.SaveRequestEvent += OnSaveRequestEvent;
-            _eventHandler.LoadingDataFinishedEvent?.Invoke(new GameDataProvider(_skills, _state));
+            _gameDataProvider = new GameDataProvider(_skills, _state);
+            _eventBus.SubscribeStateChanged(OnStateChangedEvent);
+            _eventBus.SendInitialDataProvider(_gameDataProvider);
         }
 
-        private void OnDisable()
+        private void OnStateChangedEvent(SkillTreeRuntimeState skillTreeState)
         {
-            _eventHandler.SaveRequestEvent -= OnSaveRequestEvent;
-        }
-
-        private void OnSaveRequestEvent(SkillTreeState skillTreeState)
-        {
-            _state = skillTreeState;
+            _state = skillTreeState.State;
             SaveState();
         }
 

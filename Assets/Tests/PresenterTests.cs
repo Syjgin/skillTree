@@ -37,9 +37,9 @@ namespace Tests
             presenter.AddSkillPoint();
             presenter.AddSkillPoint();
             Assert.AreEqual(false, presenter.CanLearn);
-            presenter.SelectSkill("Two");
+            presenter.TrySelectSkill("Two");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             Assert.AreEqual(0, presenter.SkillPoints);
             Assert.AreEqual(true, presenter.IsSkillKnown("Two"));
             var state = presenter.GetState();
@@ -54,19 +54,19 @@ namespace Tests
             Assert.AreEqual(false, presenter.CanLearn);
             presenter.AddSkillPoint();
             presenter.AddSkillPoint();
-            presenter.SelectSkill("Four");
+            presenter.TrySelectSkill("Four");
             Assert.AreEqual(false, presenter.CanLearn);
-            presenter.SelectSkill("Two");
+            presenter.TrySelectSkill("Two");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             Assert.AreEqual(0, presenter.SkillPoints);
             Assert.AreEqual(true, presenter.IsSkillKnown("Two"));
-            presenter.SelectSkill("Four");
+            presenter.TrySelectSkill("Four");
             presenter.AddSkillPoint();
             presenter.AddSkillPoint();
             presenter.AddSkillPoint();
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             Assert.AreEqual(true, presenter.IsSkillKnown("Four"));
             var state = presenter.GetState();
             Assert.AreEqual(3, state.KnownSkills.Count);
@@ -77,12 +77,12 @@ namespace Tests
         public void SimpleForgetTest()
         {
             var presenter = new SkillTreePresenter(new TestInitialDataProvider());
-            presenter.SelectSkill("One");
+            presenter.TrySelectSkill("One");
             Assert.AreEqual(true, presenter.CanForget);
-            presenter.SelectSkill("Two");
+            presenter.TrySelectSkill("Two");
             Assert.AreEqual(false, presenter.CanForget);
-            presenter.SelectSkill("One");
-            presenter.Forget();
+            presenter.TrySelectSkill("One");
+            presenter.TryForget();
             Assert.AreEqual(false, presenter.IsSkillKnown("One"));
             var state = presenter.GetState();
             Assert.AreEqual(0, state.KnownSkills.Count);
@@ -97,30 +97,30 @@ namespace Tests
             {
                 presenter.AddSkillPoint();
             }
-            presenter.SelectSkill("Two");
+            presenter.TrySelectSkill("Two");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
-            presenter.SelectSkill("Three");
+            presenter.TryLearn();
+            presenter.TrySelectSkill("Three");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             for (int i = 0; i < 3; i++)
             {
                 presenter.AddSkillPoint();
             }
-            presenter.SelectSkill("Four");
+            presenter.TrySelectSkill("Four");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             Assert.AreEqual(true, presenter.CanForget);
-            presenter.SelectSkill("Two");
+            presenter.TrySelectSkill("Two");
             Assert.AreEqual(false, presenter.CanForget);
-            presenter.Learn();
-            presenter.SelectSkill("Three");
+            presenter.TryLearn();
+            presenter.TrySelectSkill("Three");
             Assert.AreEqual(false, presenter.CanForget);
-            presenter.SelectSkill("Four");
-            presenter.Forget();
-            presenter.SelectSkill("Two");
+            presenter.TrySelectSkill("Four");
+            presenter.TryForget();
+            presenter.TrySelectSkill("Two");
             Assert.AreEqual(true, presenter.CanForget);
-            presenter.SelectSkill("Three");
+            presenter.TrySelectSkill("Three");
             Assert.AreEqual(true, presenter.CanForget);
         }
 
@@ -129,9 +129,9 @@ namespace Tests
         {
             var initialDataProvider = new TestInitialDataProvider();
             var presenter = new SkillTreePresenter(initialDataProvider);
-            presenter.SelectSkill("One");
+            presenter.TrySelectSkill("One");
             Assert.AreEqual(true, presenter.CanForget);
-            presenter.Forget();
+            presenter.TryForget();
             Assert.AreEqual(1, presenter.SkillPoints);
             var neededSkillPoints = 0;
             foreach (var skill in initialDataProvider.GetAllSkills())
@@ -145,54 +145,54 @@ namespace Tests
             }
             Assert.AreEqual(neededSkillPoints + 1, presenter.SkillPoints);
             
-            presenter.SelectSkill("One");
+            presenter.TrySelectSkill("One");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             Assert.AreEqual(1, presenter.GetState().KnownSkills.Count);
             
-            presenter.SelectSkill("Two");
+            presenter.TrySelectSkill("Two");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             Assert.AreEqual(2, presenter.GetState().KnownSkills.Count);
             
-            presenter.SelectSkill("Three");
+            presenter.TrySelectSkill("Three");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             Assert.AreEqual(3, presenter.GetState().KnownSkills.Count);
             
-            presenter.SelectSkill("Four");
+            presenter.TrySelectSkill("Four");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             Assert.AreEqual(4, presenter.GetState().KnownSkills.Count);
             
-            presenter.SelectSkill("Five");
+            presenter.TrySelectSkill("Five");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             Assert.AreEqual(5, presenter.GetState().KnownSkills.Count);
             
-            presenter.SelectSkill("Six");
+            presenter.TrySelectSkill("Six");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             Assert.AreEqual(6, presenter.GetState().KnownSkills.Count);
             
-            presenter.SelectSkill("Seven");
+            presenter.TrySelectSkill("Seven");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             Assert.AreEqual(7, presenter.GetState().KnownSkills.Count);
             
-            presenter.SelectSkill("Eight");
+            presenter.TrySelectSkill("Eight");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             Assert.AreEqual(8, presenter.GetState().KnownSkills.Count);
             
-            presenter.SelectSkill("Nine");
+            presenter.TrySelectSkill("Nine");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             Assert.AreEqual(9, presenter.GetState().KnownSkills.Count);
             
-            presenter.SelectSkill("Ten");
+            presenter.TrySelectSkill("Ten");
             Assert.AreEqual(true, presenter.CanLearn);
-            presenter.Learn();
+            presenter.TryLearn();
             Assert.AreEqual(10, presenter.GetState().KnownSkills.Count);
             
             presenter.ForgetAll();
