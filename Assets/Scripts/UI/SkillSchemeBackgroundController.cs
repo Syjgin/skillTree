@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Data;
 using Logic;
@@ -28,6 +29,12 @@ namespace UI
         private void OnInitialDataLoaded(IInitialDataProvider dataProvider)
         {
             DrawScheme(dataProvider.GetAllSkills(), dataProvider.GetState());
+            StartCoroutine(Resize());
+        }
+
+        private IEnumerator Resize()
+        {
+            yield return new WaitForEndOfFrame();
             var radius = GetCircleRadius(_roundsCount);
             _background.sizeDelta = new Vector2(radius * 2, radius * 2);
             _scrollRect.horizontalNormalizedPosition = .5f;
