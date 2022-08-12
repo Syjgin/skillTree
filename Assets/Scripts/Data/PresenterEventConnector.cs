@@ -24,6 +24,7 @@ namespace Data
         private void OnSkillSelected(Skill skill)
         {
             _presenter.TrySelectSkill(skill.SkillName);
+            NotifyStateChanged();
         }
 
         private void OnSkillTreeCommand(SkillTreeCommand command)
@@ -57,7 +58,7 @@ namespace Data
 
         private void NotifyStateChanged()
         {
-            _eventBus.SendStateChanged(new SkillTreeRuntimeState()
+            _eventBus.SendStateChanged(new SkillTreeRuntimeState
             {
                 CanForget = _presenter.CanForget,
                 CanLearn = _presenter.CanLearn,

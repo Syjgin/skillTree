@@ -79,6 +79,7 @@ namespace Logic
                 SkillPoints += knownSkill.SkillPointsToLearn;
             }
             _knownSkills.Clear();
+            RecalculateAbilities();
         }
 
         public SkillTreeState GetState()
@@ -94,11 +95,6 @@ namespace Logic
                 FreeSkillPoints = SkillPoints,
                 KnownSkills = names
             };
-        }
-
-        public int GetSelectedSkillPoints()
-        {
-            return SkillNotSelected() ? 0 : _selectedSkill.SkillPointsToLearn;
         }
 
         private void RecalculateAbilities()
